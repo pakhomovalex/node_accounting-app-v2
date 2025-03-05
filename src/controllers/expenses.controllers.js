@@ -29,13 +29,11 @@ const getOneExpense = (req, res) => {
   const { id } = req.params;
 
   if (!expensesService.getOne(+id)) {
-    res.sendStatus(404);
-    res.send('Not found');
+    res.status(404).send('Not found');
   }
 
   if (typeof +id !== 'number') {
-    res.sendStatus(400);
-    res.send('Write a id for expense');
+    res.status(400).send('Write correct data');
 
     return;
   }
@@ -43,8 +41,7 @@ const getOneExpense = (req, res) => {
   const expense = expensesService.getOne(+id);
 
   if (!expense) {
-    res.sendStatus(404);
-    res.send('Not found');
+    res.status(404).send('Not found');
 
     return;
   }
@@ -64,8 +61,7 @@ const createExpense = (req, res) => {
     typeof note !== 'string' ||
     !usersService.getOne(+userId)
   ) {
-    res.sendStatus(400);
-    res.send('Write correct data');
+    res.status(400).send('Write correct data');
 
     return;
   }
@@ -86,8 +82,7 @@ const deleteExpense = (req, res) => {
   const { id } = req.params;
 
   if (!expensesService.getOne(id)) {
-    res.sendStatus(404);
-    res.send('Not found');
+    res.status(404).send('Not found');
 
     return;
   }
@@ -101,9 +96,8 @@ const updateExpense = (req, res) => {
   const { userId, spentAt, title, amount, category, note } = req.body;
   const { id } = req.params;
 
-  if (!expensesService.getOne(+id)) {
-    res.sendStatus(404);
-    res.send('Not found');
+  if (expensesService.getOne(+id) === null) {
+    res.status(404).send('Not found');
 
     return;
   }
@@ -116,13 +110,12 @@ const updateExpense = (req, res) => {
     typeof category !== 'string' ||
     typeof note !== 'string'
   ) {
-    res.sendStatus(400);
-    res.send('Write correct data');
+    res.status(400).send('Write correct data');
 
     return;
   }
 
-  const updatedExpense = expensesService.updateUser({
+  const updatedExpense = expensesService.updateExpense({
     id,
     userId,
     spentAt,

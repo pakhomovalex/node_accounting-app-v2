@@ -42,6 +42,10 @@ const updateExpense = ({
 }) => {
   const expense = getOne(+id);
 
+  if (!expense) {
+    return null;
+  }
+
   Object.assign(expense, {
     userId,
     spentAt,

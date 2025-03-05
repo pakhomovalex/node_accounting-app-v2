@@ -27,6 +27,10 @@ const deleteUser = (id) => {
 const updateUser = ({ id, name }) => {
   const user = getOne(+id);
 
+  if (!user) {
+    return null;
+  }
+
   Object.assign(user, { name });
 
   return user;
