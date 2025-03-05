@@ -31,31 +31,20 @@ const deleteExpense = (id) => {
   return expenses;
 };
 
-const updateExpense = ({
-  id,
-  userId,
-  spentAt,
-  title,
-  amount,
-  category,
-  note,
-}) => {
+const updateExpense = (id, body) => {
   const expense = getOne(+id);
 
   if (!expense) {
     return null;
   }
 
-  Object.assign(expense, {
-    userId,
-    spentAt,
-    title,
-    amount,
-    category,
-    note,
-  });
+  Object.assign(expense, body);
 
   return expense;
+};
+
+const resetExpenses = () => {
+  expenses = [];
 };
 
 module.exports = {
@@ -64,4 +53,5 @@ module.exports = {
   create,
   deleteExpense,
   updateExpense,
+  resetExpenses,
 };

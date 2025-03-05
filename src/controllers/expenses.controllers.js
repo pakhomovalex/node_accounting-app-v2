@@ -93,7 +93,7 @@ const deleteExpense = (req, res) => {
 };
 
 const updateExpense = (req, res) => {
-  const { userId, spentAt, title, amount, category, note } = req.body;
+  const body = req.body;
   const { id } = req.params;
 
   if (expensesService.getOne(+id) === null) {
@@ -102,28 +102,13 @@ const updateExpense = (req, res) => {
     return;
   }
 
-  if (
-    typeof +userId !== 'number' ||
-    typeof spentAt !== 'string' ||
-    typeof title !== 'string' ||
-    typeof amount !== 'number' ||
-    typeof category !== 'string' ||
-    typeof note !== 'string'
-  ) {
+  if (Object.keys(body).length === 0) {
     res.status(400).send('Write correct data');
 
     return;
   }
 
-  const updatedExpense = expensesService.updateExpense({
-    id,
-    userId,
-    spentAt,
-    title,
-    amount,
-    category,
-    note,
-  });
+  const updatedExpense = expensesService.updateExpense(id, body);
 
   res.status(200).send(updatedExpense);
 };

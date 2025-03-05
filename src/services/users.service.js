@@ -36,10 +36,15 @@ const updateUser = ({ id, name }) => {
   return user;
 };
 
+const resetUsers = () => {
+  users = [];
+};
+
 module.exports = {
   getAllUsers,
   getOne,
   create,
   deleteUser,
   updateUser,
+  resetUsers,
 };
